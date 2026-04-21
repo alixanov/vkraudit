@@ -105,7 +105,6 @@ const App = () => {
   const [fileName, setFileName] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState(null);
-  const [stepResults, setStepResults] = useState({});
 
   const steps = [
     { id: 0, name: 'Извлечение текста' },
@@ -235,7 +234,6 @@ const App = () => {
     const totalScore = fontTotal + volumeTotal + structureTotal + referencesTotal + uniquenessScore;
     const percentage = Math.round((totalScore / 100) * 100);
     
-    // НОВАЯ ШКАЛА ОЦЕНОК
     let status = 'poor';
     let grade = '2 — НЕУДОВЛЕТВОРИТЕЛЬНО';
     if (percentage >= 90) { status = 'excellent'; grade = '5 — ОТЛИЧНО'; }
