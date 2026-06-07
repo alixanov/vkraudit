@@ -1,0 +1,15 @@
+{
+  "name": "vkraudit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VKRAudit — проверка ВКР по ГОСТ Р 7.0.11-2024 (client + backend)",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix backend install --omit=dev",
+    "start": "npm --prefix backend start",
+    "dev:client": "npm --prefix client start",
+    "dev:server": "npm --prefix backend run dev"
+  }
+}

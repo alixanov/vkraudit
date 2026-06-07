@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vkr-client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "client", "start"],
+      "port": 3005
+    },
+    {
+      "name": "vkr-server",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["backend/server.js"],
+      "port": 5001
+    }
+  ]
+}

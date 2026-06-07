@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VKRAudit — Проверка ВКР</title>
+
+  <!-- Применяем тему ДО первого рендера React, чтобы не было вспышки -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme', t !== 'light' ? 'dark' : 'light');
+    })();
+  </script>
+
+  <!-- CSS-переменные заданы прямо здесь, работают сразу — до загрузки JS-бандла -->
+  <style>
+    :root {
+      --bg:        #F0F4F8;
+      --surface:   #ffffff;
+      --surface-2: #F8FAFC;
+      --surface-3: #F1F5F9;
+      --border:    #E8EDF5;
+      --border-2:  #E2E8F0;
+      --text-1:    #0F1C2E;
+      --text-2:    #374151;
+      --text-3:    #64748B;
+      --text-4:    #9CA3AF;
+      --text-5:    #CBD5E1;
+      --shadow-s:  0 2px 8px rgba(0,0,0,0.05);
+      --shadow-m:  0 4px 16px rgba(0,0,0,0.08);
+      --shadow-l:  0 8px 32px rgba(0,0,0,0.12);
+      --green-tint:    #D1FAE5;
+      --green-border:  #A7F3D0;
+      --yellow-tint:   #FEF3C7;
+      --yellow-border: #FDE68A;
+      --red-tint:      #FEE2E2;
+      --red-border:    #FECACA;
+      --blue-tint:     #DBEAFE;
+      --blue-border:   #BFDBFE;
+      --purple-tint:   #EDE9FE;
+    }
+    [data-theme="dark"] {
+      --bg:        #0D1117;
+      --surface:   #161B22;
+      --surface-2: rgba(255,255,255,0.03);
+      --surface-3: #1E293B;
+      --border:    #1E293B;
+      --border-2:  #21262D;
+      --text-1:    #E6EDF3;
+      --text-2:    #C9D1D9;
+      --text-3:    #6B7280;
+      --text-4:    #4B5563;
+      --text-5:    #2D3748;
+      --shadow-s:  0 2px 8px rgba(0,0,0,0.25);
+      --shadow-m:  0 4px 16px rgba(0,0,0,0.35);
+      --shadow-l:  0 8px 32px rgba(0,0,0,0.5);
+      --green-tint:    rgba(16,185,129,0.1);
+      --green-border:  rgba(16,185,129,0.25);
+      --yellow-tint:   rgba(245,158,11,0.08);
+      --yellow-border: rgba(245,158,11,0.25);
+      --red-tint:      rgba(239,68,68,0.08);
+      --red-border:    rgba(239,68,68,0.25);
+      --blue-tint:     rgba(59,130,246,0.1);
+      --blue-border:   rgba(59,130,246,0.25);
+      --purple-tint:   rgba(139,92,246,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.25s, color 0.25s;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>

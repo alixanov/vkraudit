@@ -1,0 +1,9 @@
+{
+  "font": { "name": "Times New Roman", "size": 14, "lineSpacing": 1.5 },
+  "margins": { "left": 30, "right": 15, "top": 20, "bottom": 20, "tolerance": 2 },
+  "volume": { "totalMin": 70, "totalMax": 120, "introMin": 2, "introMax": 3, "conclusionMin": 2, "conclusionMax": 3 },
+  "structure": { "chaptersCount": 3, "minSubchapters": 2 },
+  "bibliography": { "minSources": 20 },
+  "uniqueness": { "minPercent": 70 },
+  "maxFileSize": 52428800
+}

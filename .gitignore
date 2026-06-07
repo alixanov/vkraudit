@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+**/.env
+!**/.env.example
+
+# builds
+client/build/
+dist/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# uploads
+backend/uploads/
+
+# os / editor
+.DS_Store
+Thumbs.db
