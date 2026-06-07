@@ -119,7 +119,7 @@ app.get('/api/results', async (_, res) => {
    Если рядом есть client/build — сервер раздаёт SPA и работает как единый
    origin (тогда фронт обращается к /api/* относительными путями).            */
 const CLIENT_BUILD = process.env.CLIENT_BUILD_PATH
-  || path.resolve(__dirname, '../client/build');
+  || path.resolve(__dirname, '../frontend/build');
 
 if (fs.existsSync(CLIENT_BUILD)) {
   app.use(express.static(CLIENT_BUILD));

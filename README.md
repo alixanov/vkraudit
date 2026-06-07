@@ -8,59 +8,40 @@
 
 ```
 vkr/
-├── client/        # React (CRA) — фронтенд
-├── backend/       # Express (ES modules) — API + анализ
-├── package.json   # корневые скрипты для монолит-деплоя
-└── railway.json   # конфиг Railway (NIXPACKS)
+├── frontend/      # React (CRA) — отдельный сервис
+│   └── railway.json
+└── backend/       # Express (ES modules) — API, отдельный сервис
+    └── railway.json
 ```
+
+Каждая папка деплоится как **самостоятельный сервис Railway** (Root Directory =
+`frontend` / `backend`).
 
 ## Локальная разработка
 
 ```bash
-# 1. Backend
-cd backend
-cp .env.example .env        # заполнить MONGODB_URI и ключи Tigris
-npm install
-npm run dev                 # http://localhost:5001
+# Backend
+cd backend && cp .env.example .env && npm install && npm run dev   # :5001
 
-# 2. Frontend (в новом терминале)
-cd client
-npm install
-npm start                   # http://localhost:3005 (proxy → :5001)
+# Frontend (новый терминал)
+cd frontend && npm install && npm start                           # :3005 (proxy → :5001)
 ```
 
-Фронтенд обращается к API относительными путями (`/api/...`). В dev запросы
-идут через `proxy` в `client/package.json`, поэтому менять код не нужно.
+## Production / Railway — два сервиса
 
-## Production / Railway
+**backend** (Root Directory = `backend`)
+- Build: NIXPACKS (`npm install`)
+- Start: `npm start` → Express, слушает `0.0.0.0:$PORT`
+- Healthcheck: `/health`
+- Переменные: `NODE_ENV=production`, `MONGODB_URI`, `TIGRIS_ENDPOINT`,
+  `TIGRIS_ACCESS_KEY_ID`, `TIGRIS_SECRET_ACCESS_KEY`, `TIGRIS_BUCKET`,
+  `CLIENT_URL` (домен фронтенда).
 
-Деплой монолитом: один сервис собирает фронт и раздаёт его из backend
-(один origin — CORS не требуется, env с URL backend не нужен).
+**frontend** (Root Directory = `frontend`)
+- Build: `npm run build` → `frontend/build`
+- Start: `npx serve -s build -l $PORT` (статика SPA)
+- Переменная: `REACT_APP_API_URL=https://<backend>.up.railway.app`
 
-- **Build:** `npm run build` — ставит зависимости client, собирает `client/build`,
-  ставит prod-зависимости backend.
-- **Start:** `npm start` — запускает backend, который раздаёт `client/build`
-  и отвечает на `/api/*`.
-- **Healthcheck:** `GET /health`.
-
-### Переменные окружения на Railway
-
-| Переменная | Назначение |
-|------------|------------|
-| `NODE_ENV` | `production` |
-| `MONGODB_URI` | строка подключения MongoDB |
-| `TIGRIS_ENDPOINT` | `https://fly.storage.tigris.dev` |
-| `TIGRIS_ACCESS_KEY_ID` | ключ Tigris |
-| `TIGRIS_SECRET_ACCESS_KEY` | секрет Tigris |
-| `TIGRIS_BUCKET` | имя бакета |
-| `CLIENT_URL` | (опц.) доп. origin'ы через запятую |
-| `PORT` | задаётся Railway автоматически |
-
-`localhost` и любые `*.railway.app` / `*.up.railway.app` разрешены в CORS
-автоматически. Никакие URL в коде не захардкожены.
-
-### Раздельный деплой (опционально)
-
-Если фронт и backend — два разных сервиса, задайте на фронтенде
-`REACT_APP_API_URL=https://<backend>.up.railway.app` (на этапе build).
-Остальное работает без изменений кода.
+CORS на backend автоматически разрешает `localhost` и любые
+`*.railway.app` / `*.up.railway.app`, поэтому фронт и API общаются без правок
+кода. Никакие URL/ключи не захардкожены — всё через env.
