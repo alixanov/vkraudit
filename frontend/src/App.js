@@ -92,6 +92,7 @@ const LogoName = styled.span`
 const LogoSub = styled.span`
   font-size: 9px; font-weight: 600; letter-spacing: 1px;
   color: rgba(255,255,255,0.25); text-transform: uppercase; line-height: 1;
+  @media(max-width:380px){ display: none; }
 `;
 
 const NavControls = styled.div`
@@ -107,7 +108,7 @@ const LangSwitcher = styled.div`
 
 const LangBtn = styled.button`
   display: flex; align-items: center; gap: 5px;
-  padding: 0 10px; height: 100%;
+  padding: 0 10px; height: 100%; min-width: 44px;
   background: ${p => p.$on ? 'rgba(59,130,246,0.3)' : 'transparent'};
   border: none; border-right: 1px solid rgba(255,255,255,0.07);
   cursor: pointer; transition: background 0.15s;
@@ -115,18 +116,20 @@ const LangBtn = styled.button`
   color: ${p => p.$on ? '#fff' : 'rgba(255,255,255,0.35)'};
   &:last-child { border-right: none; }
   &:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  &:focus-visible { outline: 2px solid #3B82F6; outline-offset: -2px; }
 `;
 
 const Sep = styled.div`width:1px; height:18px; background:rgba(255,255,255,0.08);`;
 
 const ThemeBtn = styled.button`
-  width: 32px; height: 32px; border-radius: 8px;
+  width: 36px; height: 36px; border-radius: 8px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   color: rgba(255,255,255,0.45);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
   &:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  &:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; }
 `;
 
 /* ─── Layout ─── */
@@ -141,6 +144,7 @@ const Main = styled.main`
   margin: 0 auto;
   padding: 28px 20px 80px;
   @media(max-width:640px){ padding: 20px 14px 60px; }
+  @media(max-width:380px){ padding: 16px 10px 48px; }
 `;
 
 /* ─── Landing hero ─── */
@@ -150,9 +154,9 @@ const HowItWorks = styled.div`
   border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden;
   box-shadow: var(--shadow-m);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   animation: ${fadeUp} 0.4s ease;
-  @media(max-width:500px){ grid-template-columns:1fr; }
+  @media(max-width:600px){ grid-template-columns:1fr; }
 `;
 
 const HowStep = styled.div`
@@ -160,26 +164,26 @@ const HowStep = styled.div`
   padding: 20px 14px; text-align: center;
   border-right: 1px solid var(--border);
   &:last-child { border-right: none; }
-  @media(max-width:500px){
+  @media(max-width:600px){
     border-right: none;
     border-bottom: 1px solid var(--border);
     &:last-child { border-bottom: none; }
-    flex-direction: row; text-align: left; gap: 12px; padding: 14px 16px;
+    flex-direction: row; text-align: left; gap: 12px; padding: 12px 16px;
   }
 `;
 
 const HowNum = styled.div`
-  width: 26px; height: 26px; border-radius: 50%;
+  width: 28px; height: 28px; border-radius: 50%;
   background: var(--blue-tint); border: 1.5px solid var(--blue-border);
   font-size: 11px; font-weight: 800; color: #3B82F6;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 8px; flex-shrink: 0;
-  @media(max-width:500px){ margin-bottom:0; }
+  @media(max-width:600px){ margin-bottom:0; }
 `;
 
 const HowIcon = styled.div`
   color: ${p => p.$c}; margin-bottom: 6px;
-  @media(max-width:500px){ display:none; }
+  @media(max-width:600px){ display:none; }
 `;
 
 const HowLabel = styled.div`
@@ -218,9 +222,10 @@ const ResultsWrap = styled.div`animation: ${fadeUp} 0.4s ease;`;
 const Footer = styled.footer`
   border-top: 1px solid var(--border-2);
   background: var(--bg);
-  padding: 16px 20px;
+  padding: 14px 20px;
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 8px;
+  flex-wrap: wrap; gap: 6px;
+  @media(max-width:480px){ justify-content: center; text-align: center; padding: 12px 14px; }
 `;
 
 const FooterTxt = styled.span`

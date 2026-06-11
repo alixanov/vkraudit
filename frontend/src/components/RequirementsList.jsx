@@ -44,9 +44,9 @@ const SecBadge = styled.div`
 /* ── Cards grid ── */
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 9px;
-  @media(max-width:520px){ grid-template-columns: 1fr; }
+  @media(max-width:560px){ grid-template-columns: 1fr; }
 `;
 
 const Card = styled.div`
@@ -220,7 +220,7 @@ const buildCats = (d, t) => [
     icon: <StraightenIcon sx={{ fontSize: 15, color: '#10B981' }}/>,
     bg: 'rgba(16,185,129,.12)', name: t.catVol, max: 20,
     reqs: [
-      { name: t.reqNames.volume,     score: d.volumeScore     ?? 0, max: 12, desc: 'Общий объём — не менее 70 страниц' },
+      { name: t.reqNames.volume,     score: d.volumeScore     ?? 0, max: 12, desc: 'Общий объём — не менее 45 страниц' },
       { name: t.reqNames.intro,      score: d.introScore      ?? 0, max: 4,  desc: 'Введение более 2 стр.: актуальность, цель, задачи, объект, предмет' },
       { name: t.reqNames.conclusion, score: d.conclusionScore ?? 0, max: 4,  desc: 'Заключение более 2 стр.: выводы по каждой главе' },
     ],

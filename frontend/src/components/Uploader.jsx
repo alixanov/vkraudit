@@ -76,7 +76,7 @@ const PickBtn = styled.div`
   display: inline-flex; align-items: center; gap: 7px;
   background: linear-gradient(135deg, #2563EB, #3B82F6);
   color: #fff; font-size: 13px; font-weight: 700;
-  padding: 10px 20px; border-radius: 10px;
+  padding: 11px 22px; border-radius: 10px; min-height: 44px;
   box-shadow: 0 4px 14px rgba(59,130,246,0.3);
   transition: box-shadow .2s, transform .15s;
   cursor: pointer;
@@ -126,10 +126,11 @@ const StatusPill = styled.div`
 const ReplBtn = styled.button`
   display: flex; align-items: center; gap: 4px;
   background: none; border: 1px solid var(--border);
-  border-radius: 8px; padding: 6px 11px;
+  border-radius: 8px; padding: 8px 12px; min-height: 36px;
   font-size: 11px; font-weight: 600; color: var(--text-3);
   cursor: pointer; white-space: nowrap; transition: all .15s;
   &:hover { border-color: #3B82F6; color: #3B82F6; background: rgba(59,130,246,.05); }
+  &:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; }
 `;
 
 const HiddenInput = styled.input`display:none;`;

@@ -34,7 +34,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px; margin-bottom: 18px;
-  @media(max-width: 680px) { grid-template-columns: 1fr; }
+  @media(max-width: 640px) { grid-template-columns: 1fr; }
 `;
 
 const Card = styled.div`
@@ -118,7 +118,8 @@ const Divider = styled.div`
 
 const GradeGrid = styled.div`
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  @media(max-width: 480px) { grid-template-columns: repeat(2, 1fr); }
+  @media(max-width: 560px) { grid-template-columns: repeat(2, 1fr); }
+  @media(max-width: 320px) { grid-template-columns: 1fr; }
 `;
 
 const GBox = styled.div`
@@ -208,8 +209,8 @@ export default function ScoringGuide() {
         { n: t.reqNames.conclusion, p: '4'  },
       ],
       desc: [
-        'Общий объём от 70 страниц — полные баллы',
-        'Менее 70 страниц — баллы снижаются пропорционально',
+        'Общий объём от 45 страниц — полные баллы',
+        'Менее 45 страниц — баллы снижаются пропорционально',
         'Введение более 2 страниц (актуальность, цель, задачи, объект, предмет)',
         'Заключение более 2 страниц (выводы по каждой главе)',
       ],

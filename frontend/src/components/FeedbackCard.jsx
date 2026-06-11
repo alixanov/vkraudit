@@ -55,7 +55,7 @@ const ScoreBig = styled.span`
 
 const Grid = styled.div`
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;
-  @media(max-width: 560px) { grid-template-columns: 1fr; }
+  @media(max-width: 600px) { grid-template-columns: 1fr; }
 `;
 
 const Col = styled.div`
@@ -123,10 +123,10 @@ function generateFeedback(results) {
 
   // Объём
   const pages = results.meta?.pages;
-  if (pages >= 70)
-    pros.push(`Объём работы ${pages} стр. — соответствует требованиям (≥70 стр.)`);
+  if (pages >= 45)
+    pros.push(`Объём работы ${pages} стр. — соответствует требованиям (≥45 стр.)`);
   else if (pages)
-    cons.push(`Объём работы ${pages} стр. — недостаточен (требуется ≥70 стр.)`);
+    cons.push(`Объём работы ${pages} стр. — недостаточен (требуется ≥45 стр.)`);
 
   if ((d.introScore ?? 0) === 4)
     pros.push('Введение полноценное — более 2 страниц');

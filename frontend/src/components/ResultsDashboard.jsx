@@ -42,6 +42,7 @@ const Banner = styled.div`
   }
   [data-theme="light"] &::before { display: none; }
   @media(max-width:480px){ padding: 18px 16px; }
+  @media(max-width:380px){ padding: 14px 12px; border-radius: 14px; }
 `;
 
 const BannerRow = styled.div`
@@ -122,7 +123,7 @@ const Ticks = styled.div`
 /* ── Mini cards ── */
 const MiniGrid = styled.div`
   display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
-  @media(max-width:480px){ grid-template-columns:1fr; }
+  @media(max-width:360px){ grid-template-columns:1fr; }
 `;
 
 const Mini = styled.div`
