@@ -39,11 +39,13 @@ const ExpandBtn = styled.div`
 
 const ScoreLine = styled.div`
   display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px;
-  background: var(--surface-2);
+  padding: 11px 14px;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px; margin-bottom: 12px;
-  font-size: 12px; color: var(--text-3);
+  font-size: 12px; color: var(--text-2);
+  flex-wrap: wrap;
+  @media(max-width:480px){ font-size: 11px; }
 `;
 
 const ScoreBig = styled.span`
@@ -59,7 +61,10 @@ const Grid = styled.div`
 `;
 
 const Col = styled.div`
-  background: var(--surface);
+  background: ${p =>
+    p.$type === 'pro' ? 'var(--green-tint)' :
+    p.$type === 'con' ? 'var(--red-tint)'   :
+                        'var(--yellow-tint)'};
   border: 1.5px solid ${p =>
     p.$type === 'pro' ? 'var(--green-border)' :
     p.$type === 'con' ? 'var(--red-border)'   :
@@ -78,10 +83,10 @@ const ColHead = styled.div`
 const Item = styled.div`
   display: flex; align-items: flex-start; gap: 7px;
   padding: 6px 0;
-  border-bottom: 1px solid var(--border-2);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
   &:last-child { border-bottom: none; padding-bottom: 0; }
   font-size: 11.5px; line-height: 1.55;
-  color: var(--text-3);
+  color: var(--text-2);
 `;
 
 const Dot = styled.div`
@@ -92,7 +97,7 @@ const Dot = styled.div`
 `;
 
 const TipsCol = styled.div`
-  background: var(--surface);
+  background: var(--yellow-tint);
   border: 1.5px solid var(--yellow-border);
   border-radius: 14px; padding: 14px;
 `;

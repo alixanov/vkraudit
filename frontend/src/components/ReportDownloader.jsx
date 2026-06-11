@@ -13,7 +13,7 @@ const fadeIn = keyframes`
 const Button = styled.button`
   background: linear-gradient(135deg, #1E3A5F, #2C5282);
   color: white;
-  padding: 14px 32px;
+  padding: 15px 32px;
   font-size: 15px;
   font-weight: 600;
   border: none;
@@ -26,15 +26,29 @@ const Button = styled.button`
   box-shadow: 0 8px 20px rgba(30, 58, 95, 0.3);
   width: 100%;
   justify-content: center;
-  
-  &:hover { 
-    transform: translateY(-3px);
+  margin-top: 20px;
+  min-height: 52px;
+
+  &:hover {
+    transform: translateY(-2px);
     box-shadow: 0 12px 25px rgba(30, 58, 95, 0.4);
   }
-  
+
+  &:active { transform: translateY(0); }
+
   &:disabled {
     opacity: 0.7;
     transform: none;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible { outline: 2px solid #60A5FA; outline-offset: 3px; }
+
+  @media(max-width:480px){
+    font-size: 14px;
+    padding: 13px 20px;
+    border-radius: 14px;
+    min-height: 48px;
   }
 `;
 
