@@ -49,21 +49,24 @@ function FlagUZ() {
 const NavBar = styled.nav`
   position: sticky; top: 0; z-index: 300;
   height: 58px;
-  background: rgba(7,10,16,0.92);
+  background: rgba(255,255,255,0.92);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
   display: flex; align-items: center;
   padding: 0 20px;
   transition: background 0.25s, border-color 0.25s;
   &::after {
     content: '';
     position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5) 40%, rgba(99,102,241,0.5) 60%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3) 40%, rgba(99,102,241,0.3) 60%, transparent);
   }
-  [data-theme="light"] & {
-    background: rgba(15,28,60,0.94);
-    border-bottom: 1px solid rgba(59,130,246,0.2);
+  [data-theme="dark"] & {
+    background: rgba(7,10,16,0.92);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    &::after {
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5) 40%, rgba(99,102,241,0.5) 60%, transparent);
+    }
   }
 `;
 
@@ -90,13 +93,17 @@ const LogoText = styled.div`
 `;
 
 const LogoName = styled.span`
-  font-size: 14px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.3px;
-  em { font-style: normal; color: #60A5FA; }
+  font-size: 14px; font-weight: 800; line-height: 1; letter-spacing: -0.3px;
+  color: #0F1C2E;
+  em { font-style: normal; color: #2563EB; }
+  [data-theme="dark"] & { color: #fff; }
+  [data-theme="dark"] & em { color: #60A5FA; }
 `;
 
 const LogoSub = styled.span`
   font-size: 9px; font-weight: 600; letter-spacing: 1px;
-  color: rgba(255,255,255,0.25); text-transform: uppercase; line-height: 1;
+  color: rgba(15,28,46,0.35); text-transform: uppercase; line-height: 1;
+  [data-theme="dark"] & { color: rgba(255,255,255,0.25); }
   @media(max-width:380px){ display: none; }
 `;
 
@@ -106,37 +113,54 @@ const NavControls = styled.div`
 
 const LangSwitcher = styled.div`
   display: flex; align-items: center;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 8px; overflow: hidden; height: 32px;
+  [data-theme="dark"] & {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+  }
 `;
 
 const LangBtn = styled.button`
   display: flex; align-items: center; gap: 5px;
   padding: 0 10px; height: 100%; min-width: 44px;
-  background: ${p => p.$on ? 'rgba(59,130,246,0.3)' : 'transparent'};
-  border: none; border-right: 1px solid rgba(255,255,255,0.07);
+  background: ${p => p.$on ? 'rgba(59,130,246,0.15)' : 'transparent'};
+  border: none; border-right: 1px solid rgba(0,0,0,0.07);
   cursor: pointer; transition: background 0.15s, color 0.15s;
   font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
-  color: ${p => p.$on ? '#fff' : 'rgba(255,255,255,0.35)'};
+  color: ${p => p.$on ? '#1D4ED8' : 'rgba(15,28,46,0.4)'};
   &:last-child { border-right: none; }
-  &:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  &:hover { background: rgba(0,0,0,0.06); color: #0F1C2E; }
   &:focus-visible { outline: 2px solid #3B82F6; outline-offset: -2px; }
+  [data-theme="dark"] & {
+    border-right-color: rgba(255,255,255,0.07);
+    background: ${p => p.$on ? 'rgba(59,130,246,0.3)' : 'transparent'};
+    color: ${p => p.$on ? '#fff' : 'rgba(255,255,255,0.35)'};
+    &:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  }
 `;
 
 const Sep = styled.div`
-  width:1px; height:18px; background:rgba(255,255,255,0.08);
+  width:1px; height:18px; background:rgba(0,0,0,0.1);
+  [data-theme="dark"] & { background: rgba(255,255,255,0.08); }
 `;
 
 const ThemeBtn = styled.button`
   width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.45);
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  color: rgba(15,28,46,0.45);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
-  &:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  &:hover { background: rgba(0,0,0,0.09); color: #0F1C2E; }
   &:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; }
+  [data-theme="dark"] & {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.45);
+    &:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  }
 `;
 
 /* ─── Layout ─── */
