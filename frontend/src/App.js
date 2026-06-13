@@ -274,17 +274,47 @@ export default function App() {
   const analyze = async (file, name) => {
     setFileName(name); setResults(null); setError(null); setIsAnalyzing(true);
     const t0 = Date.now();
+
+    const doFetch = async () => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 60_000);
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        const res = await fetch(apiUrl('/api/check'), {
+          method: 'POST', body: fd, signal: controller.signal,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `Ошибка ${res.status}`);
+        return data;
+      } finally {
+        clearTimeout(timer);
+      }
+    };
+
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      const res  = await fetch(apiUrl('/api/check'), { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `Ошибка ${res.status}`);
+      let data;
+      try {
+        data = await doFetch();
+      } catch (e) {
+        // сервер мог быть в режиме cold-start — ждём 3 сек и повторяем один раз
+        if (e.name === 'TypeError' || e.name === 'AbortError') {
+          await new Promise(r => setTimeout(r, 3000));
+          data = await doFetch();
+        } else {
+          throw e;
+        }
+      }
       const wait = 5500 - (Date.now() - t0);
       if (wait > 0) await new Promise(r => setTimeout(r, wait));
       setResults(data);
     } catch (e) {
-      setError(e.message || 'Не удалось связаться с сервером');
+      const msg = e.name === 'AbortError'
+        ? 'Сервер не ответил за 60 секунд — попробуйте ещё раз'
+        : (e.name === 'TypeError'
+            ? 'Не удалось связаться с сервером — проверьте соединение и попробуйте снова'
+            : (e.message || 'Неизвестная ошибка'));
+      setError(msg);
     } finally {
       setIsAnalyzing(false);
     }
