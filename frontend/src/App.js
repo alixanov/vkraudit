@@ -244,6 +244,16 @@ const ErrBox = styled.div`
   border-radius: 12px; padding: 14px 16px;
   color: #F87171; font-size: 14px; line-height: 1.5;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+`;
+
+const RetryBtn = styled.button`
+  margin-left: auto; flex-shrink: 0;
+  background: #EF4444; color: #fff;
+  border: none; border-radius: 8px;
+  padding: 5px 14px; font-size: 12px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  &:hover { background: #DC2626; }
 `;
 
 /* ─── Results wrapper ─── */
@@ -270,8 +280,10 @@ export default function App() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results,     setResults]     = useState(null);
   const [error,       setError]       = useState(null);
+  const [lastFile,    setLastFile]    = useState(null);
 
   const analyze = async (file, name) => {
+    setLastFile({ file, name });
     setFileName(name); setResults(null); setError(null); setIsAnalyzing(true);
     const t0 = Date.now();
 
@@ -385,7 +397,12 @@ export default function App() {
         {error && (
           <ErrBox>
             <ErrorOutlineIcon sx={{ fontSize: 18, flexShrink: 0, marginTop: '1px' }}/>
-            {error}
+            <span style={{ flex: 1 }}>{error}</span>
+            {lastFile && (
+              <RetryBtn onClick={() => analyze(lastFile.file, lastFile.name)}>
+                Повторить
+              </RetryBtn>
+            )}
           </ErrBox>
         )}
 
