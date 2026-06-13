@@ -142,6 +142,7 @@ const GRng = styled.div`
 
 function CatCard({ cat }) {
   const [open, setOpen] = useState(false);
+  const { t } = useApp();
   return (
     <Card $accent={cat.accent}>
       <CardTop>
@@ -159,7 +160,7 @@ function CatCard({ cat }) {
       </Items>
       <InfoToggle $c={cat.c} onClick={() => setOpen(o => !o)}>
         <InfoOutlinedIcon sx={{ fontSize: 12 }}/>
-        {open ? 'Скрыть описание' : 'Что проверяется?'}
+        {open ? t.infoToggleHide : t.infoToggleShow}
         {open
           ? <ExpandLessIcon sx={{ fontSize: 12, marginLeft: 'auto' }}/>
           : <ExpandMoreIcon sx={{ fontSize: 12, marginLeft: 'auto' }}/>}
@@ -192,12 +193,7 @@ export default function ScoringGuide() {
         { n: t.reqNames.lineSpacing, p: '4' },
         { n: t.reqNames.pageNumbers, p: '3' },
       ],
-      desc: [
-        'Основной шрифт — Times New Roman во всём документе',
-        'Размер шрифта 14 пт для основного текста',
-        'Межстрочный интервал 1,5 во всём тексте',
-        'Сквозная нумерация страниц (кроме титульного листа)',
-      ],
+      desc: t.descFont,
     },
     {
       icon: <StraightenIcon sx={{ fontSize: 17, color: '#10B981' }}/>,
@@ -208,12 +204,7 @@ export default function ScoringGuide() {
         { n: t.reqNames.intro,      p: '4'  },
         { n: t.reqNames.conclusion, p: '4'  },
       ],
-      desc: [
-        'Общий объём от 45 страниц — полные баллы',
-        'Менее 45 страниц — баллы снижаются пропорционально',
-        'Введение более 2 страниц (актуальность, цель, задачи, объект, предмет)',
-        'Заключение более 2 страниц (выводы по каждой главе)',
-      ],
+      desc: t.descVol,
     },
     {
       icon: <MenuBookIcon sx={{ fontSize: 17, color: '#F59E0B' }}/>,
@@ -228,15 +219,7 @@ export default function ScoringGuide() {
         { n: t.reqNames.conclusionSec, p: '5'  },
         { n: t.reqNames.appendix,      p: '7'  },
       ],
-      desc: [
-        'Оглавление с указанием страниц',
-        'Раздел «Введение» как самостоятельный раздел',
-        'Глава 1 — минимум 2 подраздела (1.1, 1.2, ...)',
-        'Глава 2 — минимум 2 подраздела (2.1, 2.2, ...)',
-        'Глава 3 — минимум 2 подраздела (3.1, 3.2, ...)',
-        'Раздел «Заключение» как самостоятельный раздел',
-        'Раздел «Приложения» в конце работы',
-      ],
+      desc: t.descStruct,
     },
     {
       icon: <AnalyticsIcon sx={{ fontSize: 17, color: '#8B5CF6' }}/>,
@@ -247,11 +230,7 @@ export default function ScoringGuide() {
         { n: t.reqNames.findings,      p: '5' },
         { n: t.reqNames.citations,     p: '5' },
       ],
-      desc: [
-        'Таблицы и рисунки — иллюстративный материал анализа',
-        'Выводы по каждой главе, обобщающие результаты',
-        'Ссылки на источники в тексте в формате [1], [2, 3]',
-      ],
+      desc: t.descAnalysis,
     },
   ];
 

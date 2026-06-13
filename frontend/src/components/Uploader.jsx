@@ -153,7 +153,7 @@ export default function Uploader({ onFileSelected, isAnalyzing }) {
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ];
     if (!allowed.includes(f.type) && !f.name.endsWith('.docx')) {
-      alert('Только PDF или DOCX');
+      alert(t.fileTypeError);
       return;
     }
     setFile(f);
@@ -171,11 +171,11 @@ export default function Uploader({ onFileSelected, isAnalyzing }) {
           <FileSize>{fmtSize(file.size)} · {file.name.endsWith('.docx') ? 'DOCX' : 'PDF'}</FileSize>
         </FileMeta>
         {isAnalyzing ? (
-          <StatusPill $analyzing>Анализ...</StatusPill>
+          <StatusPill $analyzing>{t.analyzingStatus}</StatusPill>
         ) : (
           <>
             <StatusPill>
-              <CheckCircleIcon sx={{ fontSize: 11 }}/>Готово
+              <CheckCircleIcon sx={{ fontSize: 11 }}/>{t.ready}
             </StatusPill>
             <ReplBtn onClick={() => document.getElementById('vkr-upload').click()}>
               <SyncIcon sx={{ fontSize: 12 }}/>{t.replace}

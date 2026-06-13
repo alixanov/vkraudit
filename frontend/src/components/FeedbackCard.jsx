@@ -102,7 +102,7 @@ const TipsCol = styled.div`
   border-radius: 14px; padding: 14px;
 `;
 
-function generateFeedback(results) {
+function generateFeedback(results, t) {
   const d = results.details || {};
   const pros = [];
   const cons = [];
@@ -111,54 +111,54 @@ function generateFeedback(results) {
 
   // Форматирование
   if (d.fontTimesScore === 4 && d.fontSize14Score === 4 && d.lineSpacingScore === 4) {
-    pros.push('Оформление текста полностью соответствует ГОСТ: Times New Roman 14 пт, интервал 1,5');
+    pros.push(t.proFormatOk);
   } else {
-    if ((d.fontTimesScore ?? 0) < 4)   cons.push('Шрифт не соответствует требованиям (требуется Times New Roman)');
-    if ((d.fontSize14Score ?? 0) < 4)  cons.push('Размер шрифта не равен 14 пт');
-    if ((d.lineSpacingScore ?? 0) < 4) cons.push('Межстрочный интервал не равен 1,5');
-    tips.push('Выделите весь текст (Ctrl+A) → установите Times New Roman, 14 пт, интервал 1,5');
+    if ((d.fontTimesScore ?? 0) < 4)   cons.push(t.conFontTimes);
+    if ((d.fontSize14Score ?? 0) < 4)  cons.push(t.conFontSize);
+    if ((d.lineSpacingScore ?? 0) < 4) cons.push(t.conLineSpacing);
+    tips.push(t.tipFormat);
   }
 
   if (d.pageNumbersScore === 3)
-    pros.push('Нумерация страниц расставлена корректно');
+    pros.push(t.proPageNums);
   else {
-    cons.push('Нумерация страниц не обнаружена');
-    tips.push('Вставьте → Номера страниц → Внизу → По центру; включите «Особый колонтитул для первой страницы»');
+    cons.push(t.conPageNums);
+    tips.push(t.tipPageNums);
   }
 
   // Объём
   const pages = results.meta?.pages;
   if (pages >= 45)
-    pros.push(`Объём работы ${pages} стр. — соответствует требованиям (≥45 стр.)`);
+    pros.push(t.proVolOk(pages));
   else if (pages)
-    cons.push(`Объём работы ${pages} стр. — недостаточен (требуется ≥45 стр.)`);
+    cons.push(t.conVolLow(pages));
 
   if ((d.introScore ?? 0) === 4)
-    pros.push('Введение полноценное — более 2 страниц');
+    pros.push(t.proIntroOk);
   else if ((d.introScore ?? 0) > 0) {
-    cons.push('Введение короче нормы (требуется более 2 стр.)');
-    tips.push('Расширьте введение: актуальность темы, цель, задачи, объект и предмет исследования, методы');
+    cons.push(t.conIntroShort);
+    tips.push(t.tipIntro);
   } else {
-    cons.push('Раздел «ВВЕДЕНИЕ» не обнаружен');
-    tips.push('Добавьте раздел «ВВЕДЕНИЕ» с отдельным заголовком');
+    cons.push(t.conIntroMissing);
+    tips.push(t.tipIntroMissing);
   }
 
   if ((d.conclusionScore ?? 0) === 4)
-    pros.push('Заключение полноценное — более 2 страниц');
+    pros.push(t.proConclusionOk);
   else if ((d.conclusionScore ?? 0) > 0) {
-    cons.push('Заключение короче нормы (требуется более 2 стр.)');
-    tips.push('Расширьте заключение: выводы по каждой главе и общий итог исследования');
+    cons.push(t.conConcShort);
+    tips.push(t.tipConclusion);
   } else {
-    cons.push('Раздел «ЗАКЛЮЧЕНИЕ» не обнаружен');
-    tips.push('Добавьте раздел «ЗАКЛЮЧЕНИЕ» с выводами по всем главам');
+    cons.push(t.conConcMissing);
+    tips.push(t.tipConcMissing);
   }
 
   // Структура
   if ((d.contentsScore ?? 0) === 5)
-    pros.push('Оглавление с нумерацией страниц присутствует');
+    pros.push(t.proContentsOk);
   else {
-    cons.push('Оглавление не обнаружено');
-    tips.push('Создайте автооглавление: Ссылки → Оглавление (все заголовки через стили Heading 1/2/3)');
+    cons.push(t.conContents);
+    tips.push(t.tipContents);
   }
 
   const chapters = [
@@ -171,63 +171,66 @@ function generateFeedback(results) {
     if (score === max) {
       chaptersOk++;
     } else if (score > 0) {
-      cons.push(`Глава ${num} содержит менее 2 подразделов`);
-      tips.push(`Добавьте минимум 2 подраздела в Главу ${num}: ${num}.1, ${num}.2`);
+      cons.push(t.conChapterSubs(num));
+      tips.push(t.tipChapterSubs(num));
     } else {
-      cons.push(`Глава ${num} не обнаружена в документе`);
-      tips.push(`Добавьте заголовок «Глава ${num}» или «${num}. Название» (стиль Heading 1)`);
+      cons.push(t.conChapterMiss(num));
+      tips.push(t.tipChapterMiss(num));
     }
   });
-  if (chaptersOk === 3)
-    pros.push('Все три главы структурированы корректно (≥2 подраздела в каждой)');
+  if (chaptersOk === 3) pros.push(t.proChaptersOk);
 
   if ((d.conclusionSectionScore ?? 0) === 5)
-    pros.push('Раздел «Заключение» структурно выделен отдельным заголовком');
+    pros.push(t.proConcSecOk);
 
   if ((d.appendixScore ?? 0) > 0)
-    pros.push('Приложения включены в работу');
+    pros.push(t.proAppendixOk);
   else {
-    cons.push('Раздел «Приложения» отсутствует');
-    tips.push('Добавьте приложения: схемы, таблицы, скриншоты, листинги кода');
+    cons.push(t.conAppendix);
+    tips.push(t.tipAppendix);
   }
 
-  // Анализ результата
+  // Анализ
   if ((d.tablesFiguresScore ?? 0) === 5)
-    pros.push('Анализ подкреплён таблицами и рисунками');
+    pros.push(t.proTablesOk);
   else {
-    cons.push('Недостаточно иллюстративного материала (таблицы, рисунки)');
-    tips.push('Добавьте таблицы, рисунки и диаграммы для наглядного анализа результатов');
+    cons.push(t.conTables);
+    tips.push(t.tipTables);
   }
 
   if ((d.findingsScore ?? 0) === 5)
-    pros.push('В работе присутствуют выводы по главам');
+    pros.push(t.proFindingsOk);
   else {
-    cons.push('Выводы по главам не обнаружены');
-    tips.push('Завершайте каждую главу выводами, обобщающими результаты');
+    cons.push(t.conFindings);
+    tips.push(t.tipFindings);
   }
 
   if ((d.citationsScore ?? 0) === 5)
-    pros.push('Текст подкреплён ссылками на источники');
+    pros.push(t.proCitationsOk);
   else {
-    cons.push('Мало ссылок на источники в тексте');
-    tips.push('Подкрепляйте утверждения ссылками на источники в формате [1], [2, 3]');
+    cons.push(t.conCitations);
+    tips.push(t.tipCitations);
   }
 
   // Общий совет
-  if (pct >= 90)
-    tips.push('Работа на высоком уровне — перед защитой перечитайте введение и заключение ещё раз');
-  else if (pct >= 70)
-    tips.push('Устраните замечания по структуре — это существенно повысит итоговую оценку');
-  else
-    tips.push('Уделите внимание структуре и анализу результатов — они дают наибольшее количество баллов (65 из 100)');
+  if (pct >= 90)      tips.push(t.tipExcellent);
+  else if (pct >= 70) tips.push(t.tipGood);
+  else                tips.push(t.tipPoor);
 
   return { pros, cons, tips };
 }
 
 export default function FeedbackCard({ results }) {
   const [open, setOpen] = useState(true);
-  const { pros, cons, tips } = generateFeedback(results);
+  const { t } = useApp();
+  const { pros, cons, tips } = generateFeedback(results, t);
   const pct = results.totalScore || 0;
+
+  const scoreText =
+    pct >= 90 ? t.scoreExcellent :
+    pct >= 70 ? t.scoreGood :
+    pct >= 60 ? t.scoreFair :
+                t.scorePoor;
 
   return (
     <Wrap>
@@ -236,7 +239,7 @@ export default function FeedbackCard({ results }) {
           <TitleIcon>
             <LightbulbIcon sx={{ fontSize: 15, color: '#fff' }}/>
           </TitleIcon>
-          Экспертный анализ работы
+          {t.feedbackTitle}
         </Title>
         <ExpandBtn onClick={() => setOpen(o => !o)}>
           {open ? <ExpandLessIcon sx={{ fontSize: 20 }}/> : <ExpandMoreIcon sx={{ fontSize: 20 }}/>}
@@ -247,22 +250,17 @@ export default function FeedbackCard({ results }) {
         <>
           <ScoreLine>
             <ScoreBig $v={pct}>{pct}/100</ScoreBig>
-            <span>
-              {pct >= 90 ? '— Отличный уровень. Работа готова к защите.' :
-               pct >= 70 ? '— Хороший уровень. Исправьте замечания перед защитой.' :
-               pct >= 60 ? '— Удовлетворительный уровень. Требуются доработки.' :
-                           '— Требуются серьёзные доработки по большинству критериев.'}
-            </span>
+            <span>{scoreText}</span>
           </ScoreLine>
 
           <Grid>
             <Col $type="pro">
               <ColHead $type="pro">
                 <CheckCircleIcon sx={{ fontSize: 13 }}/>
-                Плюсы ({pros.length})
+                {t.feedbackPros} ({pros.length})
               </ColHead>
               {pros.length === 0
-                ? <Item><Dot $type="pro"/>Нет явных преимуществ</Item>
+                ? <Item><Dot $type="pro"/>{t.feedbackNoPros}</Item>
                 : pros.map((p, i) => (
                   <Item key={i}><Dot $type="pro"/>{p}</Item>
                 ))}
@@ -271,10 +269,10 @@ export default function FeedbackCard({ results }) {
             <Col $type="con">
               <ColHead $type="con">
                 <CancelIcon sx={{ fontSize: 13 }}/>
-                Минусы ({cons.length})
+                {t.feedbackCons} ({cons.length})
               </ColHead>
               {cons.length === 0
-                ? <Item><Dot $type="con"/>Замечаний нет — отличный результат!</Item>
+                ? <Item><Dot $type="con"/>{t.feedbackNoCons}</Item>
                 : cons.map((c, i) => (
                   <Item key={i}><Dot $type="con"/>{c}</Item>
                 ))}
@@ -284,7 +282,7 @@ export default function FeedbackCard({ results }) {
           <TipsCol>
             <ColHead $type="tip">
               <LightbulbIcon sx={{ fontSize: 13 }}/>
-              Советы по улучшению ({tips.length})
+              {t.feedbackTips} ({tips.length})
             </ColHead>
             {tips.map((tip, i) => (
               <Item key={i}><Dot $type="tip"/>{tip}</Item>

@@ -168,7 +168,7 @@ export default function ProcessTimeline() {
 
       <BarWrap>
         <BarMeta>
-          <BarLbl>Прогресс анализа</BarLbl>
+          <BarLbl>{t.progressLabel}</BarLbl>
           <BarPct>{pct}%</BarPct>
         </BarMeta>
         <Track><Fill $w={pct}/></Track>
