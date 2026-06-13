@@ -7,9 +7,13 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "dev": "concurrently --names \"BACK,FRONT\" --prefix-colors \"cyan,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:frontend": "npm --prefix frontend start",
     "dev:backend": "npm --prefix backend run dev",
     "build:frontend": "npm --prefix frontend install && npm --prefix frontend run build",
     "build:backend": "npm --prefix backend install"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }
